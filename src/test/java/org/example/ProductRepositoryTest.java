@@ -56,6 +56,20 @@ public class ProductRepositoryTest {
     }
 
     @Test
+    public void shouldNotSaveIfIdAlreadyExists() {
+        ProductRepository repo = new ProductRepository();
+        repo.save(book1);
+        repo.save(smartphone1);
+        repo.save(book2);
+        repo.save(smartphone2);
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            repo.save(book1);
+        });
+
+    }
+
+    @Test
     public void shouldRemoveOneProductIfIdCorrect() {
         ProductRepository repo = new ProductRepository();
         repo.save(book1);
@@ -110,7 +124,6 @@ public class ProductRepositoryTest {
         Assertions.assertThrows(RuntimeException.class, () -> {
             repo.removeById(-100);
         });
-
     }
 
 }

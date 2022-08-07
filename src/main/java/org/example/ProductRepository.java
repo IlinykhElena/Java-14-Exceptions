@@ -5,6 +5,9 @@ public class ProductRepository {
     private Product[] products = new Product[0];
 
     public void save(Product product) {
+        if (findById(product.getId()) != null) {
+            throw new AlreadyExistsException("Элемент с id " + product.getId() + " уже существует.");
+        }
         Product[] tmp = new Product[products.length + 1];
         for (int i = 0; i < products.length; i++) {
             tmp[i] = products[i];
